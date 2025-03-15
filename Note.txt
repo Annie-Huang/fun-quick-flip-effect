@@ -1,0 +1,6 @@
+Create a fun quick text flip effect (https://www.youtube.com/watch?v=9skKBYLt738)
+
+https://codepen.io/kevinpowell/pen/ZYzNjbX
+https://github.com/Annie-Huang/fun-quick-flip-effect
+
+----------------------------------------------------------------
