@@ -1,0 +1,58 @@
+@layer general-styling {
+  :root {
+    --black: hsl(228, 14%, 7%);
+    --white: hsl(220, 33%, 96%);
+    --gray: hsl(220, 2%, 51%);
+    --teal: hsl(173, 47%, 52%);
+  }
+
+  body {
+    margin: 0;
+    font-family: system-ui;
+    font-size: 2rem;
+    display: grid;
+    min-block-size: 100svh;
+    place-content: center;
+    background: var(--teal);
+    color: var(--white);
+  }
+
+  h1 {
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 900;
+    margin: 0;
+    color: hsl(from var(--teal) h 20% 15%);
+  }
+
+  @layer demo-specific-prettying-up {
+    /* Want to keep it an unordered list, and don't really feel
+   like the numbers should be anything more than decoration, which
+   is why I went with spans with aria-hidden */
+    ul:has(.quick-flip) {
+      margin: 0;
+      padding-block: clamp(3rem, 10vmin, 6rem);
+      padding-inline: clamp(5rem, 15vmin, 10rem);
+      border-radius: 1rem;
+      box-shadow: 0 0 1rem hsl(from var(--black) h s l / 0.4);
+
+      list-style: none;
+      text-transform: uppercase;
+      font-weight: 900;
+      background: var(--black);
+
+      li {
+        margin-block: 1rem;
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--white);
+
+        span {
+          color: var(--gray);
+        }
+      }
+    }
+  }
+}
