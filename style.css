@@ -17,15 +17,36 @@
     /* inline elements can't use transforms */
     display: block;
 
+    /*
+    !!!!!! How does this work, explanation: !!!!!!
+    1. translateY(-2lh) means translate 200% upwards of the line height value.
+    2. transform var(--transition-duration) means transform in X amount of time.
+    3. translate 0ms calc(var(--transition-duration) / 2); means take the delay of X/2 time, and then it gets to X/2 time, take no time (0ms) and do the translate effect straight away.
+       Be aware of any time value need to use '0ms', '0' will not work.
+    4. translate: 0 2lh; means translate downwards 200% of the line height value while keep the x-axis position unchanged.
+    5. the '-2lh' and '2lh' must be opposite and have the same value and the value must be at least 2 or above.
+    6. Therefore,
+        From 0 - X/2 seconds, we will have the text transform UP the first 100%, so it's out of the view of user.
+        Then at X/2 second exact point, we will have translate move DOWN 200% straight away. Two property cancel out each other, so at the end of X/2 second, the text is at the 100% DOWN position (still out of view)
+        Then X/2 - X seconds, we have transform move UP ANOTHER second 100%, while the net position effect is at DOWN position at 100% (200% down - the 1st 100% up).
+        There is why at X/2 - X second, you can see the text from DOWN 100% position slowly move up to it's original position.
+
+    In order to achieve this, we also have to have the --time-function that reach exactly the middle of the the total height (1/2 of the 200%) at exactly the 50% of the time (X/2). so the switch happens when the text is out of the view.
+    Normal easy in (default) or easy out position will not work. Have to choose easy in and out. See screen print pictures.
+    https://easingwizard.com/
+    */
+
     /* the transform is moving it up
        then the translate has a  */
     transition:
       transform var(--transition-duration) var(--timing-function),
-      translate 0ms calc(var(--transition-duration) / 2);
+      /* CAN DELETE: comment on the below and let you see how it got stuck on one side -> just move up */
+        translate 0ms calc(var(--transition-duration) / 2);
   }
 
   &:is(:hover, :focus-within) > * {
     transform: translateY(-2lh);
+    /* CAN DELETE: comment on the below and let you see how it got stuck on one side -> just move up */
     translate: 0 2lh;
   }
 
